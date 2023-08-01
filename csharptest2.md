@@ -1,0 +1,41 @@
+Algorithm in C# that validates IPv4 addresses in dot-decimal format
+
+public static bool ValidateIPv4Address(string ipAddress)
+{
+    // Split the IP address into octets
+    string[] octets = ipAddress.Split('.');
+
+    // Check if there are exactly four octets
+    if (octets.Length != 4)
+    {
+        return false;
+    }
+
+    // Check each octet
+    foreach (string octet in octets)
+    {
+        // Check if the octet is a valid integer
+        if (!int.TryParse(octet, out int value))
+        {
+            return false;
+        }
+
+        // Check if the octet is within the range of 0 to 255
+        if (value < 0 || value > 255)
+        {
+            return false;
+        }
+
+        // Check if the octet has leading zeros
+        if (octet.Length > 1 && octet[0] == '0')
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+string ipAddress = "192.168.0.1";
+bool isValid = ValidateIPv4Address(ipAddress);
+Console.WriteLine(isValid); // Output: True
